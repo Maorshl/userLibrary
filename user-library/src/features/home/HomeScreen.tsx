@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/store";
+import React from "react";
+import EditUserModal from "../edit/EditUserModal";
 import UsersTable from "./components/UsersTable";
-import { getUsers } from "./state/homeActions";
 
 function HomeScreen() {
   return (
-    <div>
+    <div className="main-table">
       <UsersTable />
+      <EditUserModal />
     </div>
   );
 }
