@@ -11,6 +11,7 @@ import {
   Editable,
   EditablePreview,
   EditableInput,
+  FormLabel,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import {
@@ -29,7 +30,6 @@ export default function EditUserModal() {
   const userToEdit = useAppSelector((state) => state.homeSlice.userToEdit);
   const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector((state) => state.homeSlice.isModalOpen);
-  // const { email, name, location } = userToEdit;
 
   const openOrCloseModal = () => {
     dispatch(toggleModal());
@@ -42,6 +42,7 @@ export default function EditUserModal() {
         <ModalHeader>Modal Title</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          <FormLabel>Email</FormLabel>
           <Editable defaultValue={userToEdit?.email}>
             <EditablePreview />
             <EditableInput
@@ -50,6 +51,7 @@ export default function EditUserModal() {
               }
             />
           </Editable>
+          <FormLabel>First name</FormLabel>
           <Editable defaultValue={userToEdit?.name?.first}>
             <EditablePreview />
             <EditableInput
@@ -58,31 +60,32 @@ export default function EditUserModal() {
               }
             />
           </Editable>
+          <FormLabel>Last name</FormLabel>
           <Editable defaultValue={userToEdit?.name?.last}>
             <EditablePreview />
             <EditableInput
               onChange={(text) =>
                 dispatch(setUerToEditLastName(text.target.value))
               }
-              //   onChange={(text) => setLastNameToSave(text.target.value)}
             />
           </Editable>
+          <FormLabel>City</FormLabel>
           <Editable defaultValue={userToEdit?.location?.city}>
             <EditablePreview />
             <EditableInput
               onChange={(text) => dispatch(setUerToEditCity(text.target.value))}
-              //   onChange={(text) => setCityToSave(text.target.value)}
             />
           </Editable>
+          <FormLabel>Street name</FormLabel>
           <Editable defaultValue={userToEdit?.location?.street?.name}>
             <EditablePreview />
             <EditableInput
               onChange={(text) =>
                 dispatch(setUerToEditStreetName(text.target.value))
               }
-              //   onChange={(text) => setStreetNameToSave(text.target.value)}
             />
           </Editable>
+          <FormLabel>Street number</FormLabel>
           <Editable
             defaultValue={userToEdit?.location?.street?.number?.toString()}
           >
@@ -91,18 +94,15 @@ export default function EditUserModal() {
               onChange={(text) =>
                 dispatch(setUerToEditStreetNumber(Number(text.target.value)))
               }
-              //   onChange={(text) =>
-              // setsStreetNumberToSave(Number(text.target.value))
-              //   }
             />
           </Editable>
+          <FormLabel>Country</FormLabel>
           <Editable defaultValue={userToEdit?.location?.country}>
             <EditablePreview />
             <EditableInput
               onChange={(text) =>
                 dispatch(setUerToEditCountry(text.target.value))
               }
-              //   onChange={(text) => setscountryToSave(text.target.value)}
             />
           </Editable>
         </ModalBody>
