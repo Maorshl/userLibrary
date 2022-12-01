@@ -19,6 +19,7 @@ import {
   toggleModal,
 } from "../state/homeSlice";
 import { User } from "../../../models/users";
+import { batch } from "react-redux";
 
 export default function UsersTable() {
   const users = useAppSelector((state) => state.homeSlice.users);
@@ -29,9 +30,11 @@ export default function UsersTable() {
   }, []);
 
   const onUserEdit = (user: User, index: number) => {
-    dispatch(toggleModal());
-    dispatch(setUserToEdit(user));
-    dispatch(setUserToEditIndex(index));
+    batch(() => {
+      dispatch(toggleModal());
+      dispatch(setUserToEdit(user));
+      dispatch(setUserToEditIndex(index));
+    });
   };
 
   return (
