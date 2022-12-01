@@ -12,7 +12,11 @@ import {
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
 import { getUsers } from "../state/homeActions";
-import { setUserToEdit, toggleModal } from "../state/homeSlice";
+import {
+  setUserToEdit,
+  setUserToEditIndex,
+  toggleModal,
+} from "../state/homeSlice";
 import { User } from "../../../models/users";
 
 export default function UsersTable() {
@@ -23,14 +27,15 @@ export default function UsersTable() {
     dispatch(getUsers());
   }, []);
 
-  const onUserEdit = (user: User) => {
+  const onUserEdit = (user: User, index: number) => {
     dispatch(toggleModal());
     dispatch(setUserToEdit(user));
+    dispatch(setUserToEditIndex(index));
   };
 
   return (
     <TableContainer>
-      <Table variant="striped" colorScheme="whatsapp">
+      <Table variant="simple" colorScheme="whatsapp">
         <Thead>
           <Tr>
             <Th>Image</Th>
@@ -65,7 +70,7 @@ export default function UsersTable() {
                   user?.location?.country}
               </Td>
               <Td>{user.login?.uuid}</Td>
-              <Td color={"blue"} onClick={() => onUserEdit(user)}>
+              <Td color={"blue"} onClick={() => onUserEdit(user, i)}>
                 Edit
               </Td>
             </Tr>

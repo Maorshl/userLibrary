@@ -5,14 +5,14 @@ import { User } from "../../../models/users";
 export interface HomeState {
   users: User[];
   isModalOpen: boolean;
-  userToEdit: User;
+  userToEdit?: User;
   userToEditIndex: number;
 }
 
 const initialState: HomeState = {
   users: [],
   isModalOpen: false,
-  userToEdit: {},
+  userToEdit: undefined,
   userToEditIndex: 0,
 };
 
@@ -36,6 +36,44 @@ export const homeSlice = createSlice({
     saveEditedUser: (state, action: PayloadAction<User>) => {
       state.users[state.userToEditIndex] = action.payload;
     },
+    setUerToEditEmail: (state, action: PayloadAction<string>) => {
+      if (state.userToEdit) {
+        state.userToEdit.email = action.payload;
+      }
+    },
+    setUerToEditFirstName: (state, action: PayloadAction<string>) => {
+      if (state.userToEdit) {
+        state.userToEdit.name.first = action.payload;
+      }
+    },
+    setUerToEditLastName: (state, action: PayloadAction<string>) => {
+      if (state.userToEdit) {
+        state.userToEdit.name.last = action.payload;
+      }
+    },
+    setUerToEditStreetName: (state, action: PayloadAction<string>) => {
+      if (state.userToEdit) {
+        state.userToEdit.location.street.name = action.payload;
+      }
+    },
+    setUerToEditStreetNumber: (state, action: PayloadAction<number>) => {
+      if (state.userToEdit) {
+        state.userToEdit.location.street.number = action.payload;
+      }
+    },
+    setUerToEditCountry: (state, action: PayloadAction<string>) => {
+      if (state.userToEdit) {
+        state.userToEdit.location.country = action.payload;
+      }
+    },
+    setUerToEditCity: (state, action: PayloadAction<string>) => {
+      if (state.userToEdit) {
+        state.userToEdit.location.city = action.payload;
+      }
+    },
+    saveEditUser: (state, action: PayloadAction<User>) => {
+      state.users[state.userToEditIndex] = action.payload;
+    },
   },
 });
 
@@ -45,6 +83,14 @@ export const {
   setUserToEdit,
   setUserToEditIndex,
   saveEditedUser,
+  setUerToEditEmail,
+  setUerToEditFirstName,
+  setUerToEditLastName,
+  setUerToEditStreetName,
+  setUerToEditStreetNumber,
+  setUerToEditCountry,
+  setUerToEditCity,
+  saveEditUser,
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Modal,
   ModalOverlay,
@@ -13,14 +13,23 @@ import {
   EditableInput,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { saveEditedUser, toggleModal } from "../home/state/homeSlice";
+import {
+  saveEditedUser,
+  setUerToEditCity,
+  setUerToEditCountry,
+  setUerToEditEmail,
+  setUerToEditFirstName,
+  setUerToEditLastName,
+  setUerToEditStreetName,
+  setUerToEditStreetNumber,
+  toggleModal,
+} from "../home/state/homeSlice";
 
 export default function EditUserModal() {
   const userToEdit = useAppSelector((state) => state.homeSlice.userToEdit);
-  const [userToSave, setUserToSave] = useState(userToEdit);
   const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector((state) => state.homeSlice.isModalOpen);
-  const { email, name, location } = userToEdit;
+  // const { email, name, location } = userToEdit;
 
   const openOrCloseModal = () => {
     dispatch(toggleModal());
@@ -33,86 +42,67 @@ export default function EditUserModal() {
         <ModalHeader>Modal Title</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Editable defaultValue={email}>
+          <Editable defaultValue={userToEdit?.email}>
             <EditablePreview />
             <EditableInput
               onChange={(text) =>
-                setUserToSave((prevState) => {
-                  return { ...prevState, email: text.target.value };
-                })
+                dispatch(setUerToEditEmail(text.target.value))
               }
             />
           </Editable>
-          <Editable defaultValue={name?.first}>
+          <Editable defaultValue={userToEdit?.name?.first}>
             <EditablePreview />
             <EditableInput
               onChange={(text) =>
-                setUserToSave((prevState) => {
-                  return { ...prevState, name: { first: text.target.value } };
-                })
+                dispatch(setUerToEditFirstName(text.target.value))
               }
             />
           </Editable>
-          <Editable defaultValue={name?.last}>
+          <Editable defaultValue={userToEdit?.name?.last}>
             <EditablePreview />
             <EditableInput
               onChange={(text) =>
-                setUserToSave((prevState) => {
-                  return { ...prevState, name: { last: text.target.value } };
-                })
+                dispatch(setUerToEditLastName(text.target.value))
               }
+              //   onChange={(text) => setLastNameToSave(text.target.value)}
             />
           </Editable>
-          <Editable defaultValue={location?.city}>
+          <Editable defaultValue={userToEdit?.location?.city}>
             <EditablePreview />
             <EditableInput
-              onChange={(text) =>
-                setUserToSave((prevState) => {
-                  return {
-                    ...prevState,
-                    location: { city: text.target.value },
-                  };
-                })
-              }
+              onChange={(text) => dispatch(setUerToEditCity(text.target.value))}
+              //   onChange={(text) => setCityToSave(text.target.value)}
             />
           </Editable>
-          <Editable defaultValue={location?.street?.name}>
+          <Editable defaultValue={userToEdit?.location?.street?.name}>
             <EditablePreview />
             <EditableInput
               onChange={(text) =>
-                setUserToSave((prevState) => {
-                  return {
-                    ...prevState,
-                    location: { street: { name: text.target.value } },
-                  };
-                })
+                dispatch(setUerToEditStreetName(text.target.value))
               }
+              //   onChange={(text) => setStreetNameToSave(text.target.value)}
             />
           </Editable>
-          <Editable defaultValue={location?.street?.number?.toString()}>
+          <Editable
+            defaultValue={userToEdit?.location?.street?.number?.toString()}
+          >
             <EditablePreview />
             <EditableInput
               onChange={(text) =>
-                setUserToSave((prevState) => {
-                  return {
-                    ...prevState,
-                    location: { street: { number: Number(text.target.value) } },
-                  };
-                })
+                dispatch(setUerToEditStreetNumber(Number(text.target.value)))
               }
+              //   onChange={(text) =>
+              // setsStreetNumberToSave(Number(text.target.value))
+              //   }
             />
           </Editable>
-          <Editable defaultValue={location?.country}>
+          <Editable defaultValue={userToEdit?.location?.country}>
             <EditablePreview />
             <EditableInput
               onChange={(text) =>
-                setUserToSave((prevState) => {
-                  return {
-                    ...prevState,
-                    location: { country: text.target.value },
-                  };
-                })
+                dispatch(setUerToEditCountry(text.target.value))
               }
+              //   onChange={(text) => setscountryToSave(text.target.value)}
             />
           </Editable>
         </ModalBody>
@@ -122,7 +112,7 @@ export default function EditUserModal() {
             mr={3}
             onClick={() => {
               openOrCloseModal();
-              dispatch(saveEditedUser(userToSave));
+              userToEdit && dispatch(saveEditedUser(userToEdit));
             }}
           >
             Save
