@@ -1,19 +1,12 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/store";
-import { getUsers } from "./state/homeActions";
+import React from "react";
+import EditUserModal from "../edit/EditUserModal";
+import UsersTable from "./components/UsersTable";
 
 function HomeScreen() {
-  const dispatch = useAppDispatch();
-  const users = useAppSelector((state) => state.homeSlice.users);
-  useEffect(() => {
-    dispatch(getUsers());
-  }, []);
-
   return (
-    <div>
-      {users?.map((user) => {
-        return <p>{user.name?.first + " " + user?.name?.last}</p>;
-      })}
+    <div className="main-table">
+      <UsersTable />
+      <EditUserModal />
     </div>
   );
 }
